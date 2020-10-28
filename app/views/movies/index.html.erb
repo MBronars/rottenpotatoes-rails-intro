@@ -14,15 +14,14 @@
 <% end %>
 
 <%#  Part 2: Start here... %>
-<%= link_to 'Movie Title', movies_path, :class => 'hilite' 'text-primary' %>
-<%= link_to 'Release Date', movies_path, :class => 'hilite' 'text-primary' %>
+
 
 <table class="table table-striped col-md-12" id="movies">
   <thead>
     <tr>
-      <th>Movie Title</th>
+      <th class= <%= @title_class %>> <%= link_to 'Movie Title', movies_path(:order => 'title', :ratings => params[:ratings])%> </th>
       <th>Rating</th>
-      <th>Release Date</th>
+      <th class = <%= @date_class %>> <%= link_to 'Release Date', movies_path(:order => 'date', :ratings => Hash[@ratings_to_show.collect { |item| [item, "1"] } ])%> </th>
       <th>More Info</th>
     </tr>
   </thead>

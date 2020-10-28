@@ -7,13 +7,35 @@ class MoviesController < ApplicationController
   end
 
   def index
+    if params[:ratings] == nil and params[:order] == nil
+      params[:ratings] = session[:ratings]
+      params[:order] = session[:order]
+    else
+      session.clear
+    end
     @all_ratings = Movie.all_ratings
+    puts(params[:ratings])
     if params[:ratings] == nil
       @ratings_to_show = []
     else
       @ratings_to_show = params[:ratings].keys
     end
-    @movies = Movie.with_ratings(@ratings_to_show)
+    if @ratings_to_show == []
+      @movies = Movie.all
+    else
+      @movies = Movie.with_ratings(@ratings_to_show)
+    end
+    order = params[:order]
+    if order == 'title'
+      @movies = @movies.order(:title)
+      @title_class = 'bg-warning hilite'
+    end
+    if order == 'date'
+      @movies = @movies.order(:release_date)
+      @date_class = 'bg-warning hilite'
+    end
+    session[:ratings] = params[:ratings]
+    session[:order] = params[:order]
   end
 
   def new
