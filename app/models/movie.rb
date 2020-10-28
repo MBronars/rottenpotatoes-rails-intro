@@ -7,6 +7,7 @@ class Movie < ActiveRecord::Base
       Movie.all
     else
       Movie.where(ratings: ratings_list)
+    end
   end
   def self.all_ratings()
     ratings = ['G','PG','PG-13','R']
